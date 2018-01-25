@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.util.Iterator;
+import java.util.List;
 
 @RestController
 @RequestMapping("/book")
@@ -49,5 +50,16 @@ public class BookResource {
             ex.printStackTrace();
             return new ResponseEntity("Upload failure!", HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @RequestMapping("/bookList")
+    public List<Book> getBookList() {
+        return bookService.findAll();
+    }
+
+    @RequestMapping("/{id}")
+    public Book getBookList(@PathVariable("id") Long id) {
+        Book book = bookService.findOne(id);
+        return book;
     }
 }
