@@ -4,12 +4,14 @@ import com.bookstore.config.SecurityUtility;
 import com.bookstore.domain.User;
 import com.bookstore.domain.security.Role;
 import com.bookstore.domain.security.UserRole;
+import com.bookstore.service.StorageService;
 import com.bookstore.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import javax.annotation.Resource;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,12 +21,18 @@ public class BookstoreAngularApplication implements CommandLineRunner {
     @Autowired
     private UserService userService;
 
+    @Resource
+    StorageService storageService;
+
     public static void main(String[] args) {
         SpringApplication.run(BookstoreAngularApplication.class, args);
     }
 
     @Override
     public void run(String... strings) throws Exception {
+        storageService.deleteAll();
+        storageService.init();
+
         User user1 = new User();
         user1.setFirstName("Rata");
         user1.setLastName("Bogdan");
